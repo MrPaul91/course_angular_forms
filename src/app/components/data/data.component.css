@@ -1,0 +1,21 @@
+h4{
+  color: blue;
+}
+
+button{
+  margin:auto;
+  display:block;
+}
+
+.info, .success, .warning, .error, .validation {
+  border: 1px solid;
+  margin: 3px 0px;
+  padding: 5px 10px 10px 5px;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+}
+
+.error{
+  color: #D8000C;
+  background-color: #FFBABA;
+}

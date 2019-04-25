@@ -13,10 +13,10 @@ button{
 
 .info, .success, .warning, .error, .validation {
   border: 1px solid;
-  margin: 3px 0px;
-  padding: 5px 10px 10px 5px;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
   background-repeat: no-repeat;
-  background-position: 8px center;
+  background-position: 10px center;
 }
 .info {
   color: #00529B;
@@ -36,5 +36,10 @@ button{
 .error{
   color: #D8000C;
   background-color: #FFBABA;
+  background-image: url('https://i.imgur.com/GnyDvKN.png');
+}
+.validation{
+  color: #D63301;
+  background-color: #FFCCBA;
   background-image: url('https://i.imgur.com/GnyDvKN.png');
 }

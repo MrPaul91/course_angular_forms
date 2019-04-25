@@ -1,15 +1,29 @@
 <h4 align="center">Formularios <small>data</small></h4>
 <hr>
-<form align="center">
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
 
-  <div>
+  <div formGroupName="nombrecompleto">
     <div class="form-group row">
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
-
         <input class="form-control"
-               type="text"
-               placeholder="Nombre">
+          type="text"
+          placeholder="Nombre"
+          formControlName="nombre">
+        <div *ngIf="forma.get('nombrecompleto.nombre').errors">
+          <div class="error"
+            *ngIf="forma.get('nombrecompleto.nombre').errors['required']">
+            El nombre es necesario
+          </div>
+        </div>
+
+        <div *ngIf="forma.get('nombrecompleto.nombre').errors">
+          <div class="error"
+            *ngIf="forma.get('nombrecompleto.nombre').errors['minlength']">
+            La longitud minima es 3
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -18,8 +32,9 @@
       <div class="col-8">
 
         <input class="form-control"
-               type="text"
-               placeholder="Apellido">
+          type="text"
+          placeholder="Apellido"
+          formControlName="apellido">
       </div>
     </div>
 
@@ -30,8 +45,9 @@
     <div class="col-md-8">
 
       <input class="form-control"
-             type="email"
-             placeholder="Correo electronico">
+        type="email"
+        placeholder="Correo electronico"
+        formControlName="correo">
     </div>
   </div>
 
@@ -45,5 +61,7 @@
       </button>
     </div>
   </div>
+
+  {{ forma.valid }}
 
 </form>
