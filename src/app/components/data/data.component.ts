@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
+import { controlNameBinding } from '@angular/forms/src/directives/reactive_directives/form_control_name';
 
 @Component({
   selector: 'app-data',
@@ -19,7 +21,9 @@ export class DataComponent implements OnInit {
     correo: 'testing@unal.edu.co',
     password1: '',
     password2: '',
+    username: '',
     pasatiempos: ['']
+
 
   }
 
@@ -27,20 +31,43 @@ export class DataComponent implements OnInit {
 
     this.forma = new FormGroup({
       'nombrecompleto': new FormGroup({
-        'nombre': new FormControl('', [Validators.required,Validators.minLength(3)]),
+        'nombre': new FormControl('', [Validators.required, Validators.minLength(3)]),
         'apellido': new FormControl('', [Validators.required, this.noVillegas])
       }),
       'correo': new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
       'password1': new FormControl('', Validators.required),
       'password2': new FormControl(''),
-      'pasatiempos': new FormArray([new FormControl('Correr', Validators.required)])
+      'pasatiempos': new FormArray([new FormControl('Correr', Validators.required)]),
+      'username': new FormControl('', Validators.required, this.existeUsuario)
     });
 
 
     this.forma.controls['password2'].setValidators(
-      [ Validators.required, this.noIgualPass2.bind(this.forma)]
+      [Validators.required, this.noIgualPass2.bind(this.forma)]
     );
 
+    //Detecta los  cambios. La funcion se dispara cada vez que un valor cambie.
+  /*   this.forma.valueChanges.subscribe(
+      data => {
+        console.log(data);
+      }
+    )
+ */
+
+    this.forma.controls['username'].valueChanges.subscribe(
+
+      user => {
+        console.log(user);
+      }
+    )
+
+
+    this.forma.controls['username'].statusChanges.subscribe(
+
+      status => {
+        console.log(status);
+      }
+    )
 
     //Carga objeto por defecto.
     this.forma.setValue(this.usuario);
@@ -90,6 +117,26 @@ export class DataComponent implements OnInit {
     }
     return null;
   }
+
+
+  existeUsuario(control: FormControl): Promise<any> | Observable<any> {
+
+    let promesa = new Promise(
+      (resolve, reject) => {
+
+        setTimeout(() => {
+          if (control.value === 'pablo') {
+            resolve( { existe: true});
+          }
+          else{
+            resolve( null )
+          }
+        }, 3000 )
+      }
+    )
+
+    return promesa;
+  }
 }
 
 
@@ -102,6 +149,7 @@ export interface Usuario {
   password1: string;
   password2: string;
   pasatiempos: string[]
+  username: string
 
 
 }
